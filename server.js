@@ -10,6 +10,9 @@ const PORT = process.env.PORT || 8070;
 app.use(cors());
 app.use(bodyParser.json());
 
+
+
+
 const URL = process.env.MONGODB_URL;
 
 mongoose.connect(URL,{
@@ -23,6 +26,14 @@ const connection = mongoose.connection;
 connection.once("open", () =>{
     console.log("Mongodb connection success!");
 })
+
+
+const AddRouter = require("./routes/Registers.js");
+
+
+app.use("/Register",AddRouter);
+
+
 
 const paymentRouter = require("./routes/payments.js");
 
