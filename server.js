@@ -41,6 +41,9 @@ http://localhost:8070/payment
 
 app.use("/payment",paymentRouter);
 
+const travelPackageRouter=require("./routes/travelPackage.js");
+app.use("/travelpackages",travelPackageRouter);
+
 app.listen(PORT, () =>{
     console.log(`The port is : ${PORT}`);
 })
