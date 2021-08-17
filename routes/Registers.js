@@ -15,7 +15,7 @@ router.route("/add").post((req,res)=>{
         Name,
         Email,
         Password,
-        Num,
+        Num
 
     })
     
@@ -32,7 +32,7 @@ router.route("/add").post((req,res)=>{
 })
 
 
-router.route("/").get((req,res)=>{
+router.route("/login").get((req,res)=>{
 
     const Email = req.body.Email;
     const Password = req.body.Password;
@@ -56,5 +56,6 @@ router.route("/").get((req,res)=>{
 
     
 })
+
 
 module.exports = router;

@@ -44,7 +44,8 @@ app.use("/payment",paymentRouter);
 const travelPackageRouter=require("./routes/travelPackage.js");
 app.use("/travelpackages",travelPackageRouter);
 
-
+const UserRoute = require("./routes/UserProfile.js");
+app.use("/User",UserRoute);
 
 app.listen(PORT, () =>{
     console.log(`The port is : ${PORT}`);
