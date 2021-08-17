@@ -44,6 +44,10 @@ app.use("/payment",paymentRouter);
 const travelPackageRouter=require("./routes/travelPackage.js");
 app.use("/travelpackages",travelPackageRouter);
 
+const inquiryRouter=require("./routes/inquiry.js");
+app.use("/inquiry",inquiryRouter);
+
+
 app.listen(PORT, () =>{
     console.log(`The port is : ${PORT}`);
 })
