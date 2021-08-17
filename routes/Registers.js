@@ -15,9 +15,10 @@ router.route("/add").post((req,res)=>{
         Name,
         Email,
         Password,
-        Num,
+        Num
 
     })
+    
 
     NewAdd.save().then(()=>{
         res.json("Registration Added")
@@ -28,7 +29,32 @@ router.route("/add").post((req,res)=>{
     })
 
 
+})
 
+
+router.route("/login").get((req,res)=>{
+
+    const Email = req.body.Email;
+    const Password = req.body.Password;
+   
+
+    
+    Reg.findOne({Email:Email , Password:Password}).then((Registers)=>{
+        
+       if (Registers == null){
+
+        res.json("Login Fail");
+
+       }else{
+        res.json("Login Success");
+    }
+
+    }).catch((err)=>{
+        console.log(err);
+        res.json("Validation Faild");
+    })
+
+    
 })
 
 
