@@ -44,6 +44,9 @@ app.use("/payment",paymentRouter);
 const travelPackageRouter=require("./routes/travelPackage.js");
 app.use("/travelpackages",travelPackageRouter);
 
+const inquiryRouter=require("./routes/inquiry.js");
+app.use("/inquiry",inquiryRouter);
+
 const UserRoute = require("./routes/UserProfile.js");
 app.use("/User",UserRoute);
 
@@ -52,6 +55,7 @@ app.use("/Admin",adminlogRouter);
 
 const deleteuserrouter = require("./routes/Admin_Panel_ProfileManagement");
 app.use("/access",deleteuserrouter);
+
 
 app.listen(PORT, () =>{
     console.log(`The port is : ${PORT}`);
