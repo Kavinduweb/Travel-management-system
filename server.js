@@ -47,6 +47,9 @@ app.use("/travelpackages",travelPackageRouter);
 const UserRoute = require("./routes/UserProfile.js");
 app.use("/User",UserRoute);
 
+const adminlogRouter = require("./routes/AdminLogin");
+app.use("/Admin",adminlogRouter);
+
 app.listen(PORT, () =>{
     console.log(`The port is : ${PORT}`);
 })
