@@ -44,11 +44,15 @@ app.use("/payment",paymentRouter);
 const travelPackageRouter=require("./routes/travelPackage.js");
 app.use("/travelpackages",travelPackageRouter);
 
+const inquiryRouter=require("./routes/inquiry.js");
+app.use("/inquiry",inquiryRouter);
+
 const UserRoute = require("./routes/UserProfile.js");
 app.use("/User",UserRoute);
 
 const adminlogRouter = require("./routes/AdminLogin");
 app.use("/Admin",adminlogRouter);
+
 
 app.listen(PORT, () =>{
     console.log(`The port is : ${PORT}`);
