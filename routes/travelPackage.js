@@ -3,7 +3,7 @@ const TravelPackage = require('../models/travelpackages');
 
 const router =express.Router();
 
-router.post('admin/add',(req,res)=>{
+router.post('/admin/add',(req,res)=>{
     let newPackage=new TravelPackage(req.body);
 
     newPackage.save((err)=>{

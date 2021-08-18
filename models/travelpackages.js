@@ -19,12 +19,12 @@ const travelpackageSchema = new mongoose.Schema ({
     },
 
     noofdays:{
-        type:Number,
+        type:String,
         required:true
     },
 
     noofnights:{
-        type:Number,
+        type:String,
         required:true
     },
 
@@ -33,7 +33,7 @@ const travelpackageSchema = new mongoose.Schema ({
         required:true
     },
     perperson:{
-        type:Number,
+        type:String,
         required:true
     }
 
