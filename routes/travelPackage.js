@@ -1,75 +1,79 @@
-const router=require("express").Router();
-let Package = require("../models/travelpackages");
+const express = require('express');
+const TravelPackage = require('../models/travelpackages');
 
-router.route("/add").post((req,res)=>{
-     const packageName = req.body.packageName;
-     const startPoint = req.body.startPoint;
-     const price = Number(req.body.price);
-     const noOfDays = Number(req.body.noOfDays);
-     const minimumPerson = Number(req.body.minimumPerson);
+const router =express.Router();
 
-     const newPackage = new Package({
+router.post('admin/add',(req,res)=>{
+    let newPackage=new TravelPackage(req.body);
 
-        packageName,
-        startPoint,
-        price,
-        noOfDays,
-        minimumPerson
-     })
+    newPackage.save((err)=>{
+        if(err){
+            return res.status(400).json({
+                error:err
+            });
+        }
+return res.status(200).json({
+    success:"Package added successfully"
+});
+    });
+});
 
-     newPackage.save().then(()=>{
-         res.json("Travel Package Added")
-     }).catch((err)=>{
-         console.log(err);
-     })
+
+router.get('/',(req,res)=>{
+    TravelPackage.find().exec((err,posts)=>{
+        if (err){
+            return res.status(400).json({
+                error:err
+            });
+        }
+        return res.status(200).json({
+            success:true,
+            existingPackage:posts
+        });
+    });
 })
 
-router.route("/").get((req,res)=>{
-    Package.find().then((packages)=>{
-        res.json(packages)
-    }).catch((err)=>{
-        console.log(err)
-    })
-})
+router.get('/admin/:id',(req,res)=>{
+    let packageId=req.params.id;
+    TravelPackage.findById(packageId , (err,post)=>{
+        if(err){
+            return res.status(400).json({success:false,err});
+        }
+        return res.status(200).json({
+            success:true,
+            post
+        });
+    });
+});
 
-router.route("/updatepackages/:id").put(async(req,res)=>{
-    let packageId= req.params.id;
-    const {packageName,startPoint,price,noOfDays,minimumPerson}=req.body;
+router.put('/admin/update/:id',(req,res)=>{
+    TravelPackage.findByIdAndUpdate(
+        req.params.id,
+        {
+            $set:req.body
+        },
+        (err,post)=>{
+            if (err){
+                return res.status(400).json({error:err});
+            }
+            return res.status(200).json({
+                success:"Package Update Successfull"
+            });
+        }
+    );
+});
 
-    const updateTravelPackage = {
-        packageName,
-        startPoint,
-        price,
-        noOfDays,
-        minimumPerson
-    }
-    await Package.findByIdAndUpdate(packageId, updateTravelPackage).then(()=>{
-        res.status(200).send({status: "Package Updated"})
-    }).catch((err)=>{
-        console.log(err);
-        res.status(500).send({status:"Error with updating data",error: err.message});
-    })
-})
+router.delete('/admin/delete/:id',(req,res)=>{
+    TravelPackage.findByIdAndRemove(req.params.id).exec((err,deletedPost)=>{
+        if(err) return res.status(400).json({
+          message:"Package Delete unsuccesful",err
+        });
+        return res.json({
+            message:"Package Delete succesful",deletedPost
+        });
+    });
+});
 
-router.route("/delete/:id").delete(async(req,res)=>{
-    let packageId= req.params.id;
-    
-    await Package.findByIdAndDelete(packageId).then(()=>{
-        res.status(200).send({status:"Package Deleted"});
-    }).catch((err)=>{
-        console.log(err.message);
-        res.status(500).send({status:"error with deleting", error: err.message});
-    })
-})
 
-router.route("/get/:id").get(async (req,res)=>{
-    let packageId= req.params.id;
-    const Opackage = await Package.findById(packageId).then((Opackage)=>{
-        res.status(200).send({status:"package Fetched",Opackage})
-    }).catch(()=>{
-        console.log(err.message);
-        res.status(500).send({status:"error with get package", error: err.message});
-    })
-})
 
-module.exports=router; 
+module.exports=router;

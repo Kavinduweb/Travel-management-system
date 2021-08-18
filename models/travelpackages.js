@@ -1,28 +1,43 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const travelpackageSchema = new Schema({
-       packageName:{
-           type: String,
-           required: true
-       },
-       startPoint:{
-        type: String,
-        required: true
-       },
-       price:{
-           type:Number,
-           required:true
-       },
-       noOfDays:{
+const travelpackageSchema = new mongoose.Schema ({
+    packageName:{
+        type:String,
+        required:true
+    },
+
+    destination:{
+        type:String,
+        required:true
+    },
+    district:{
+        type:String,
+        required:true
+    },
+    date:{
+        type:String,
+        required:true
+    },
+
+    noofdays:{
         type:Number,
         required:true
-        },
-        minimumPerson:{
-            type:Number,
-            required:true
-        }
+    },
 
-})
+    noofnights:{
+        type:Number,
+        required:true
+    },
 
-const package = mongoose.model("travelpackage",travelpackageSchema);
-module.exports=package;
+    vehical:{
+        type:String,
+        required:true
+    },
+    perperson:{
+        type:Number,
+        required:true
+    }
+
+
+});
+
+module.exports = mongoose.model('travelpackage',travelpackageSchema);
