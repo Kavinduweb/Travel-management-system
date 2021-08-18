@@ -2,6 +2,8 @@ const express = require('express');
 const HotelBooking = require('../models/HotelBooking');
 
 const router =express.Router();
+
+
 router.post('/add',(req,res)=>{
     let newPost=new HotelBooking(req.body);
 
@@ -19,6 +21,15 @@ return res.status(200).json({
 
 
 router.route('/').get((req,res)=>{
+  
+    HotelBooking.find().then((hotelBooking)=>{
+            res.json(hotelBooking);
+    }).catch((err)=>{
+        console.log(err)
+    })
+    
+}) 
+router.route('/admin/').get((req,res)=>{
   
     HotelBooking.find().then((hotelBooking)=>{
             res.json(hotelBooking);
