@@ -17,5 +17,21 @@ return res.status(200).json({
     });
 });
 
+router.get('/allbookings/',(req,res)=>{
+    PackageBooking.find().exec((err,posts)=>{
+        if (err){
+            return res.status(400).json({
+                error:err
+            });
+        }
+        return res.status(200).json({
+            success:true,
+            allBookings:posts
+        });
+    });
+})
+
+
+
 module.exports=router;
 
