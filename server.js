@@ -56,6 +56,10 @@ app.use("/Admin",adminlogRouter);
 const deleteuserrouter = require("./routes/Admin_Panel_ProfileManagement");
 app.use("/access",deleteuserrouter);
 
+const hotelBookingRouter = require("./routes/HotelBooking");
+app.use("/hotelbooking",hotelBookingRouter);
+
+
 
 app.listen(PORT, () =>{
     console.log(`The port is : ${PORT}`);
