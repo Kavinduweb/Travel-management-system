@@ -59,6 +59,9 @@ app.use("/access",deleteuserrouter);
 const hotelBookingRouter = require("./routes/HotelBooking");
 app.use("/hotelbooking",hotelBookingRouter);
 
+const packageBookingRouter=require("./routes/Packagebooking.js");
+app.use("/packagebooking",packageBookingRouter);
+
 
 
 app.listen(PORT, () =>{
