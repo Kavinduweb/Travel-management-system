@@ -20,23 +20,32 @@ return res.status(200).json({
 });
 
 
-router.route('/').get((req,res)=>{
-  
-    HotelBooking.find().then((hotelBooking)=>{
-            res.json(hotelBooking);
-    }).catch((err)=>{
-        console.log(err)
-    })
-    
+router.get('/',(req,res)=>{
+    HotelBooking.find().exec((err,posts)=>{
+    if (err){
+        return res.status(400).json({
+            error:err
+        });
+    }
+    return res.status(200).json({
+        success:true,
+        existingBooking:posts
+    });
+});
 }) 
-router.route('/admin/').get((req,res)=>{
-  
-    HotelBooking.find().then((hotelBooking)=>{
-            res.json(hotelBooking);
-    }).catch((err)=>{
-        console.log(err)
-    })
-    
+
+router.get('/admin',(req,res)=>{
+    HotelBooking.find().exec((err,posts)=>{
+    if (err){
+        return res.status(400).json({
+            error:err
+        });
+    }
+    return res.status(200).json({
+        success:true,
+        existingBooking:posts
+    });
+});
 }) 
 
 
@@ -47,7 +56,7 @@ router.get('/read/:id',(req,res)=>{
             return res.status(400).json({success:false,err});
         }
         return res.status(200).json({
-           
+            success:true,
             hotelBooking
         });
     });
