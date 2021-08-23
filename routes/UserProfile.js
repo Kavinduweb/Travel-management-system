@@ -2,37 +2,54 @@ const router = require("express").Router();
 const User = require("../models/Register");
 
 
-router.route("/Details").get((req,res)=>{
+router.route("/Details/:id").get((req,res)=>{
+    const id = req.params.id;
+    User.findById(id).exec((err,Registers)=>{
+        if (err){
+            return res.status(400).json({
+                error:err
+               
+            })
+            
+        }
+        return res.status(200).json({
+            success:true,
+            BackendData:Registers
+   
+        })
 
-    User.find().then((Registers)=>{
-
-        res.json(Registers);
-
-    }).catch((err)=>{
-        res.json(err);
-    })
-
+        })
 })
-router.route("/Update/:Byemail").put((req,res)=>{
 
-    let primaryEmail = req.params.Byemail;
+
+
+
+router.route("/Update/:id").put((req,res)=>{
+
+    let id = req.params.id;
 
     const Name = req.body.Name;
+    const Email = req.body.Email;
     const Password = req.body.Password;
     const Num = req.body.Num;
 
     const UpdateUser = {
 
         Name,
+        Email,
         Password,
         Num
     }
 
-    const Update = User.findOneAndUpdate(primaryEmail,UpdateUser)
-    .then(()=>{
+    const Update = User.findByIdAndUpdate(id,UpdateUser)
+    .then((Registers)=>{
        
-        
-            res.json("Updated Details");
+        success:true
+        return res.status(200).json({
+            success:true,
+          
+
+        })
         
     }).catch((err)=>{
         res.json("Can't Updated");
@@ -40,23 +57,6 @@ router.route("/Update/:Byemail").put((req,res)=>{
     })
    
 })
-
-    router.route("/Delete/:Byemail").delete((req,res)=>{
-
-        let primaryEmail= req.params.Byemail;
-
-        const deleteUser = User.findOneAndDelete(primaryEmail).then(()=>{
-
-            res.json("User Deleted")
-
-        }).catch((err)=>{
-
-            req.json("Can't Delete");
-        })
-
-     })
-
-
 
 
 module.exports = router;
