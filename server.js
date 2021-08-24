@@ -27,6 +27,9 @@ connection.once("open", () =>{
     console.log("Mongodb connection success!");
 })
 
+const equipmentRouter = require("./routes/equipment.js");
+
+app.use("/equipment",equipmentRouter);
 
 const AddRouter = require("./routes/Registers.js");
 
