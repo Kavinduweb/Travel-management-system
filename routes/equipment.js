@@ -53,27 +53,28 @@ router.route("/update/:id").put(async (req, res)=>{
     })
 })
 
-router.route("/delete/:id").delete(async (req,res)=>{
-    let equipmentID = req.params.id;
+router.delete('/delete/:id',(req,res)=>{
+    Equipment.findByIdAndRemove(req.params.id).exec((err,deletedEquipment)=>{
+        if(err) return res.status(400).json({
+          message:"Error With Deleting Equipment",err
+        });
+        return res.json({
+            message:"Equipment Deleted",deletedEquipment
+        });
+    });
+});
 
-    await Equipment.findByIdAndDelete(equipmentID)
-    .then(()=>{
-       res.status(200).send({status: "Equipment deleted"}); 
-    }).catch((errr)=>{
-        console.log(err.message);
-        res.status(500).send({status: "Error with delete equipment", error: err.message});
-    })
-})
-
-router.route("/get/:id").get(async (req,res)=> {
-    let equipmentID = req.params.id;
-    const equipment = await Equipment.findById(equipmentID)
-    .then(()=>{
-        res.status(200).send({status: "Equipment fetched", equipment: equipment})       
-    }).catch(()=>{
-        console.log(err.message);
-        res.status(500).send({status: "Error with get user", error: err.message});
-    })
-})
+router.get('/get/:id',(req,res)=>{
+    let equipmentId=req.params.id;
+    Equipment.findById(equipmentId , (err,equipment)=>{
+        if(err){
+            return res.status(400).json({success:false,err});
+        }
+        return res.status(200).json({
+            success:true,
+            equipment
+        });
+    });
+});
 
 module.exports = router;
