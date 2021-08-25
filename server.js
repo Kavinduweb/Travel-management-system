@@ -40,9 +40,9 @@ app.use("/Register",AddRouter);
 
 const paymentRouter = require("./routes/payments.js");
 
-http://localhost:8070/payment
 
-app.use("/payment",paymentRouter);
+app.use(paymentRouter);
+
 
 const travelPackageRouter=require("./routes/travelPackage.js");
 app.use("/travelpackages",travelPackageRouter);
