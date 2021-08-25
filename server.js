@@ -72,6 +72,15 @@ const GuideRouter = require("./routes/Guide");
 app.use("/guide",GuideRouter);
 
 
+const activityRouter = require("./routes/Activity");
+app.use("/activity",activityRouter);
+
+
+const feedbackRouter = require("./routes/Feedback");
+app.use("/feedback",feedbackRouter);
+
+
+
 
 app.listen(PORT, () =>{
     console.log(`The port is : ${PORT}`);
