@@ -68,6 +68,9 @@ app.use("/packagebooking",packageBookingRouter);
 const hotelPackageRouter = require("./routes/HotelPackage");
 app.use("/hotelpackage",hotelPackageRouter);
 
+const GuideRouter = require("./routes/Guide");
+app.use("/guide",GuideRouter);
+
 
 
 app.listen(PORT, () =>{
