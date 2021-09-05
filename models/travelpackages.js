@@ -9,7 +9,7 @@ const travelpackageSchema = new mongoose.Schema ({
         type:String,
         required:true
     },
-    district:{
+    discription:{
         type:String,
         required:true
     },

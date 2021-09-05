@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const packagebookingSchema = new mongoose.Schema ({
-    
+
     name:{
         type:String,
         required:true
