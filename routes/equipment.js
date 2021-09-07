@@ -1,26 +1,32 @@
 const router = require("express").Router();
 let Equipment = require("../models/Equipment");
+const multer = require("multer")
 
-router.route("/add").post((req,res)=>{
-
-    const name = req.body.name;
-    const description = req.body.description;
-    const price = Number(req.body.price);
-
-    const newEquipment = new Equipment({
-
-        name,
-        description,
-        price
-    })
-
-    newEquipment.save().then(()=>{
-        res.json("Equipment Added")
-    }).catch((err)=>{
-        console.log(err);
-    })
-
+const storage=multer.diskStorage({
+    destination:(req,file,callback)=>{
+        callback(null,"../Travel-management-Frontend/public/uploads");
+    },
+    filename:(req,file,callback)=>{
+        callback(null,file.originalname);
+    }
 })
+
+const upload=multer({storage:storage});
+
+
+router.post('/admin/add', upload.single("image") ,(req,res)=>{
+    const newEquipment = new Equipment({
+        name:req.body.name,
+        description:req.body.description,
+        price:req.body.price,
+        image:req.file.originalname,
+    });
+    
+    newEquipment
+    .save()
+    .then(()=>res.json("New Equipment Added"))
+    .catch((err)=>res.status(400).json(`Error:${err}`));
+});
 
 
 router.route("/").get((req,res)=>{
