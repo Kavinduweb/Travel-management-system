@@ -10,7 +10,7 @@ const hotelBookingSchema = new Schema({
 
     },
     capacity: {
-        type: Number,
+        type: String,
         required: true
 
     },
