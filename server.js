@@ -10,9 +10,6 @@ const PORT = process.env.PORT || 8070;
 app.use(cors());
 app.use(bodyParser.json());
 
-
-
-
 const URL = process.env.MONGODB_URL;
 
 mongoose.connect(URL,{
@@ -28,21 +25,13 @@ connection.once("open", () =>{
 })
 
 const equipmentRouter = require("./routes/equipment.js");
-
 app.use("/equipment",equipmentRouter);
 
 const AddRouter = require("./routes/Registers.js");
-
-
 app.use("/Register",AddRouter);
 
-
-
 const paymentRouter = require("./routes/payments.js");
-
-
 app.use(paymentRouter);
-
 
 const travelPackageRouter=require("./routes/travelPackage.js");
 app.use("/travelpackages",travelPackageRouter);
@@ -71,13 +60,14 @@ app.use("/hotelpackage",hotelPackageRouter);
 const GuideRouter = require("./routes/Guide");
 app.use("/guide",GuideRouter);
 
-
 const activityRouter = require("./routes/Activity");
 app.use("/activity",activityRouter);
 
-
 const feedbackRouter = require("./routes/Feedback");
 app.use("/feedback",feedbackRouter);
+
+const contactUsRouter = require("./routes/ContactUs");
+app.use("/contactus",contactUsRouter);
 
 
 

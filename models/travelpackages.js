@@ -35,6 +35,10 @@ const travelpackageSchema = new mongoose.Schema ({
     perperson:{
         type:String,
         required:true
+    },
+    packageImage:{
+        type:String,
+        required:true
     }
 
 
