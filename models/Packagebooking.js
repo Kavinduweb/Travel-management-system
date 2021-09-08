@@ -1,6 +1,16 @@
 const mongoose = require('mongoose');
 const packagebookingSchema = new mongoose.Schema ({
 
+    packagename:{
+        type:String,
+        required:true
+    },
+
+    price:{
+        type:String,
+        required:true
+    },
+    
     name:{
         type:String,
         required:true
@@ -21,6 +31,10 @@ const packagebookingSchema = new mongoose.Schema ({
     joinplace:{
         type:String,
         required:true
+    },
+    date:{
+        type:Date,
+        default:Date.now
     }
     
 });
