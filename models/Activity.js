@@ -1,38 +1,15 @@
 const mongoose = require('mongoose');
-const activitySchema = new mongoose.Schema ({
-    activityName:{
-        type:String,
-        required:true
-    },
+const Schema = mongoose.Schema;
 
-    description:{
-        type:String,
-        required:true
-    },
-    tour:{
-        type:String,
-        required:true
-    },
-    time:{
-        type:String,
-        required:true
-    },
-
-    date:{
-        type:String,
-        required:true
-    },
-
-    duration:{
-        type:String,
-        required:true
-    },
-
-    price:{
-        type:String,
-        required:true
-    }
-
+const activitySchema = new Schema({
+    aname: {type: String, required: true},
+    category: {type: String, required: true},
+    description: {type: String, required: true},
+    price: {type: String, required: true},
+    activityImage: {type: String, required: true},
+    postDate: {type: Date, default:Date.now},
 });
 
-module.exports = mongoose.model('activity',activitySchema);
+const Activities = mongoose.model("Activities", activitySchema);
+
+module.exports = Activities;
