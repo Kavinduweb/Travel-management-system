@@ -61,7 +61,10 @@ const GuideRouter = require("./routes/Guide");
 app.use("/guide",GuideRouter);
 
 const activityRouter = require("./routes/Activity");
-app.use("/activity",activityRouter);
+app.use("/activities",activityRouter);
+
+const activityuserRouter = require("./routes/ActivityUser");
+app.use("/activityselect",activityuserRouter);
 
 const feedbackRouter = require("./routes/Feedback");
 app.use("/feedback",feedbackRouter);
