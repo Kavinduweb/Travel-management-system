@@ -27,6 +27,10 @@ const guideSchema = new mongoose.Schema ({
     password: {
         type: String,
         required: true,
+    },
+    guideImage: {
+        type: String,
+        required: true, 
     }
 
 

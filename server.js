@@ -69,6 +69,9 @@ app.use("/feedback",feedbackRouter);
 const contactUsRouter = require("./routes/ContactUs");
 app.use("/contactus",contactUsRouter);
 
+const guideRequestRouter = require("./routes/GuideRequest");
+app.use("/guiderequest",guideRequestRouter);
+
 
 
 
