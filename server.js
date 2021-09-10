@@ -47,6 +47,9 @@ app.use("/travelpackages",travelPackageRouter);
 const inquiryRouter=require("./routes/inquiry.js");
 app.use("/inquiry",inquiryRouter);
 
+const inquiryAdminRouter=require("./routes/InquiryAdmin.js");
+app.use("/inquiryAdmin",inquiryAdminRouter);
+
 const UserRoute = require("./routes/UserProfile.js");
 app.use("/User",UserRoute);
 
