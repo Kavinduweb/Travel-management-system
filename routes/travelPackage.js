@@ -1,21 +1,36 @@
 const express = require('express');
 const TravelPackage = require('../models/travelpackages');
-
+const multer = require("multer")
 const router =express.Router();
 
-router.post('/admin/add',(req,res)=>{
-    let newPackage=new TravelPackage(req.body);
+const storage=multer.diskStorage({
+    destination:(req,file,callback)=>{
+        callback(null,"../Travel-management-Frontend/public/uploads");
+    },
+    filename:(req,file,callback)=>{
+        callback(null,file.originalname);
+    }
+})
 
-    newPackage.save((err)=>{
-        if(err){
-            return res.status(400).json({
-                error:err
-            });
-        }
-return res.status(200).json({
-    success:"Package added successfully"
-});
+const upload=multer({storage:storage});
+
+
+router.post('/admin/add', upload.single("packageImage") ,(req,res)=>{
+    const newTravelPackage=new TravelPackage({
+        packageName:req.body.packageName,
+        destination:req.body.destination,
+        discription:req.body.discription,
+        date:req.body.date,
+        noofdays:req.body.noofdays,
+        noofnights:req.body.noofnights, 
+        vehical:req.body.vehical,
+        perperson:req.body.perperson,
+        packageImage:req.file.originalname,
     });
+    newTravelPackage
+    .save()
+    .then(()=>res.json("New Travel Package Added"))
+    .catch((err)=>res.status(400).json(`Error:${err}`));
 });
 
 

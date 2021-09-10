@@ -2,39 +2,36 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const hotelBookingSchema = new Schema({
+const hotelPackageSchema = new Schema({
 
     roomType: {
         type: String,
         required: true
 
     },
-    capacity: {
+    details: {
         type: String,
         required: true
 
     },
-    name: {
+    price: {
         type: String,
         required: true
 
     },
-    email: {
+    size: {
         type: String,
         required: true
 
     },
-    arrivalDate: {
+    maxCapacity: {
         type: String,
         required: true
 
     },
-    departureDate: {
-        type: String,
-        required: true
-    },
+
 });
 
-const hotelBooking = mongoose.model("hotelbooking",hotelBookingSchema);
+const hotelPackage = mongoose.model("hotelpackage",hotelPackageSchema);
 
-module.exports = hotelBooking;
+module.exports = hotelPackage;

@@ -10,16 +10,13 @@ const PORT = process.env.PORT || 8070;
 app.use(cors());
 app.use(bodyParser.json());
 
-
-
-
 const URL = process.env.MONGODB_URL;
 
 mongoose.connect(URL,{
     useCreateIndex: true,
+    useFindAndModify: false,
     useNewUrlParser: true,
-    useUnifiedTopologyL: true,
-    useFindAndModify: false
+    useUnifiedTopology: true,
 });
 
 const connection = mongoose.connection;
@@ -27,19 +24,14 @@ connection.once("open", () =>{
     console.log("Mongodb connection success!");
 })
 
+const equipmentRouter = require("./routes/equipment.js");
+app.use("/equipment",equipmentRouter);
 
 const AddRouter = require("./routes/Registers.js");
-
-
 app.use("/Register",AddRouter);
 
-
-
 const paymentRouter = require("./routes/payments.js");
-
-http://localhost:8070/payment
-
-app.use("/payment",paymentRouter);
+app.use(paymentRouter);
 
 const travelPackageRouter=require("./routes/travelPackage.js");
 app.use("/travelpackages",travelPackageRouter);
@@ -64,6 +56,28 @@ app.use("/hotelbooking",hotelBookingRouter);
 
 const packageBookingRouter=require("./routes/Packagebooking.js");
 app.use("/packagebooking",packageBookingRouter);
+
+const hotelPackageRouter = require("./routes/HotelPackage");
+app.use("/hotelpackage",hotelPackageRouter);
+
+const GuideRouter = require("./routes/Guide");
+app.use("/guide",GuideRouter);
+
+const activityRouter = require("./routes/Activity");
+app.use("/activities",activityRouter);
+
+const activityuserRouter = require("./routes/ActivityUser");
+app.use("/activityselect",activityuserRouter);
+
+const feedbackRouter = require("./routes/Feedback");
+app.use("/feedback",feedbackRouter);
+
+const contactUsRouter = require("./routes/ContactUs");
+app.use("/contactus",contactUsRouter);
+
+const guideRequestRouter = require("./routes/GuideRequest");
+app.use("/guiderequest",guideRequestRouter);
+
 
 
 

@@ -1,47 +1,46 @@
 const mongoose = require('mongoose');
-const travelpackageSchema = new mongoose.Schema ({
-    packageName:{
+const guiderequestSchema = new mongoose.Schema ({
+
+    guidename:{
         type:String,
         required:true
     },
 
+    guidelanguage:{
+        type:String,
+        required:true
+    },
+    
+    uname:{
+        type:String,
+        required:true
+    },
+
+    phone:{
+        type:String,
+        required:true
+    },
+    email:{
+        type:String,
+        required:true
+    },
     destination:{
         type:String,
         required:true
     },
-    discription:{
+    tourdate:{
         type:String,
         required:true
     },
-    date:{
+    noofdates:{
         type:String,
         required:true
     },
-
-    noofdays:{
-        type:String,
-        required:true
-    },
-
-    noofnights:{
-        type:String,
-        required:true
-    },
-
-    vehical:{
-        type:String,
-        required:true
-    },
-    perperson:{
-        type:String,
-        required:true
-    },
-    packageImage:{
-        type:String,
-        required:true
+    requestdate:{
+        type:Date,
+        default:Date.now
     }
-
-
+    
 });
 
-module.exports = mongoose.model('travelpackage',travelpackageSchema);
+module.exports = mongoose.model('guiderequest',guiderequestSchema);

@@ -1,5 +1,7 @@
 const router = require("express").Router();
 let Reg = require("../models/Register");
+const generateToken = require("../utils/generateToken");
+
 
 http://localhost:8070/Register/add
 
@@ -32,7 +34,7 @@ router.route("/add").post((req,res)=>{
 })
 
 
-router.route("/login").get((req,res)=>{
+router.route("/login").post((req,res)=>{
 
     const Email = req.body.Email;
     const Password = req.body.Password;
@@ -43,19 +45,31 @@ router.route("/login").get((req,res)=>{
         
        if (Registers == null){
 
-        res.json("Login Fail");
+        success:false;
+
+        
 
        }else{
-        res.json("Login Success");
-    }
+           success:true;
+          
+          res.json({
+            id:Registers._id,
+            Name:Registers.Name,
+            Email:Registers.Email,
+            Password:Registers.Password,
+            token:generateToken(Registers._id)
+           
+        });
+        } 
 
     }).catch((err)=>{
-        console.log(err);
+       
         res.json("Validation Faild");
     })
-
-    
 })
+
+   
+
 
 
 module.exports = router;
