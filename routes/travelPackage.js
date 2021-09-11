@@ -83,5 +83,18 @@ router.put('/admin/update/:id' , upload.single("packageImage"),(req,res)=>{
 });
 
 
+router.delete('/admin/delete/:id',(req,res)=>{
+    TravelPackage.findByIdAndRemove(req.params.id).exec((err,deletedTravelPackage)=>{
+        if(err) return res.status(400).json({
+          message:"TravelPackage Delete unsuccesful",err
+        });
+        return res.json({
+            message:"TravelPackage Delete succesful",deletedTravelPackage
+        });
+    });
+});
+
+
+
 
 module.exports=router;
