@@ -14,11 +14,7 @@ const paymentSchema = new Schema({
         required: true
 
     },
-    payf: {
-        type: String,
-        required: true
 
-    },
     method: {
         type: String,
         required: true
@@ -42,8 +38,16 @@ const paymentSchema = new Schema({
     amount: {
         type: Number,
         required: true
-
-    }
+    },
+    payf:{
+        type:String,
+        required: true
+    },
+    pdate:{
+        type:Date,
+        default:Date.now
+    },
+   
 })
 
 const Payment = mongoose.model("Payment",paymentSchema);

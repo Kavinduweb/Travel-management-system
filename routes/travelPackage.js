@@ -61,32 +61,25 @@ router.get('/admin/:id',(req,res)=>{
     });
 });
 
-router.put('/admin/update/:id',(req,res)=>{
-    TravelPackage.findByIdAndUpdate(
-        req.params.id,
-        {
-            $set:req.body
-        },
-        (err,post)=>{
-            if (err){
-                return res.status(400).json({error:err});
-            }
-            return res.status(200).json({
-                success:"Package Update Successfull"
-            });
-        }
-    );
-});
+router.put('/admin/update/:id' , upload.single("packageImage"),(req,res)=>{
+    TravelPackage.findByIdAndUpdate(req.params.id)
+    .then((package )=> {
+        package.packageName=req.body.packageName;
+        package.destination=req.body.destination;
+        package.discription=req.body.discription;
+        package.date=req.body.date;
+        package.noofdays=req.body.noofdays;
+        package.noofnights=req.body.noofnights; 
+        package.vehical=req.body.vehical;
+        package.perperson=req.body.perperson;
+        
 
-router.delete('/admin/delete/:id',(req,res)=>{
-    TravelPackage.findByIdAndRemove(req.params.id).exec((err,deletedPost)=>{
-        if(err) return res.status(400).json({
-          message:"Package Delete unsuccesful",err
-        });
-        return res.json({
-            message:"Package Delete succesful",deletedPost
-        });
-    });
+        package
+            .save()
+            .then(() => res.json("The Package is UPDATED successfully"))
+            .catch(err => res.status(400).json(`Error: ${err}`));
+    })
+    .catch(err => res.status(400).json(`Error: ${err}`));
 });
 
 
