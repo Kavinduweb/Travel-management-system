@@ -15,7 +15,7 @@ const hotelPackageSchema = new Schema({
 
     },
     price: {
-        type: String,
+        type: Number,
         required: true
 
     },
@@ -29,6 +29,10 @@ const hotelPackageSchema = new Schema({
         required: true
 
     },
+    packageImage:{
+        type:String,
+        required:true
+    }
 
 });
 
