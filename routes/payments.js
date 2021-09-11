@@ -74,4 +74,41 @@ router.delete('/payment/delete/:id',(req,res)=>{
     });
 });
  
+
+router.route("/payment/view/:no").get((req,res)=>{
+
+    const no = req.params.no;
+    
+
+    Payment.findOne({no:no}).then((payment)=>{
+        
+       if (payment == null){
+
+        success:false;
+
+       }else{
+           success:true;
+          
+          res.json({
+            id:payment._id,
+            reference:payment.reference,
+            name:payment.name,
+            method:payment.method,
+            card:payment.card,
+            time:payment.time,
+            amount:payment.amount,
+            payf:payment.payf,
+            no:payment.no,
+           
+        });
+        } 
+
+    }).catch((err)=>{
+       
+        res.json("You Havent Created an inquiry");
+    })
+})
+
+
+
 module.exports=router;

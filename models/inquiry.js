@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
-
-const Schema = mongoose.Schema;
-
-const inquirySchema = new Schema({
+const inquirySchema = new mongoose.Schema ({
 
     name: {
         type : String,
@@ -18,14 +15,19 @@ const inquirySchema = new Schema({
     },
     email: {
         type : String,
-        reqired : true
+        required : true
+      
     },
     inq: {
         type : String,
         required : true
+    },
+    adrep:{
+        type : String,
+        default : "Our team will response to your inquiry soon"
     }
 })
 
-const Inquiry = mongoose.model("Inquiry",inquirySchema);
 
-module.exports = Inquiry;
+
+module.exports = mongoose.model('Inquiry',inquirySchema);

@@ -1,89 +1,188 @@
-const router = require("express").Router();
-let Inquiry = require("../models/inquiry");
+const express = require('express');
+const inquiry = require('../models/inquiry');
+const router = express.Router();
+
+router.post('/add',(req,res)=>{
+    let newInq=new inquiry(req.body);
+  
+    newInq.save((err)=>{
+        if(err){
+            return res.status(400).json({
+                error:err
+            });
+        }
+    return res.status(200).json({
+    success:"Inquiry Added"
+});
+    });
+});
+
+router.get('/',(req,res)=>{
+    inquiry.find().exec((err,posts)=>{
+        if (err){
+            return res.status(400).json({
+                error:err
+            });
+        }
+        return res.status(200).json({
+            success:true,
+            allinq:posts
+        });
+    });
+});
+
+router.delete('/delete/:id',(req,res)=>{
+    inquiry.findByIdAndRemove(req.params.id).exec((err,deletedPost)=>{
+        if(err) return res.status(400).json({
+          message:"Inquiry Delete unsuccesful",err
+        });
+        return res.json({
+            message:"Inquiry Delete succesful",deletedPost
+        });
+    });
+});
+
+router.put('/update/:id',(req,res)=>{
+    inquiry.findByIdAndUpdate(
+        req.params.id,
+        {
+            $set:req.body
+        },
+        (err,post)=>{
+            if (err){
+                return res.status(400).json({error:err});
+            }
+            return res.status(200).json({
+                success:"Inquiry Update Successfull"
+            });
+        }
+    );
+});
+
+router.get("/:id",(req,res) =>{
+
+    let inqID = req.params.id;
+
+    inquiry.findById(inqID,(err,post) => {
+        if(err){
+            return res.status(400).json({success:false,err});
+
+        }
+        return res.status(200).json({
+            success:true,
+            post
+        });
+
+    });
+
+});
 
 
-router.route("/add").post((req,res)=>{
-    
+
+
+router.route("/view").post((req,res)=>{
+
     const name = req.body.name;
     const nic = req.body.nic;
-    const phone = Number(req.body.phone);
-    const email = req.body.email;
-    const inq = req.body.inq;
+   
 
-    const newInquiry = new Inquiry({
-        name,
-        nic,
-        phone,
-        email,
-        inq
+    
+    inquiry.findOne({name:name , nic:nic}).then((post)=>{
+        
+       if (post == null){
 
-    })
+        success:false;
 
-    newInquiry.save().then(()=>{
-        res.json("Inquiry Added")
+        
+
+       }else{
+           success:true;
+          
+          res.json({
+            id:post._id,
+            name:post.name,
+            nic:post.nic,
+            email:post.email,
+            phone:post.phone,
+            inq:post.inq,
+           
+           
+        });
+        } 
+
     }).catch((err)=>{
-            console.log(err);
+       
+        res.json("You Havent Created an inquiry");
     })
-
 })
 
-router.route("/").get((req,res)=>{
+router.route("/view/:nic").get((req,res)=>{
 
-    Inquiry.find().then((inquiry)=>{
-        res.json(inquiry)
+    const nic = req.params.nic;
+
+    inquiry.findOne({nic:nic}).then((post)=>{
+        
+       if (post == null){
+
+        success:false;
+       
+        
+
+       }else{
+           success:true;
+          
+          res.json({
+            id:post._id,
+            name:post.name,
+            nic:post.nic,
+            email:post.email,
+            phone:post.phone,
+            inq:post.inq,
+           
+           
+        });
+        } 
+
     }).catch((err)=>{
-        console.log(err)
+       
+        res.json("You Havent Created an inquiry");
     })
-
 })
 
-router.route("/update/:id").put (async (req, res)=>{
 
-    let userId = req.params.id;
-    const {name, nic, phone, email, inq} = req.body;
+router.route("/log").post((req,res)=>{
 
-    const updateInq = {
-        name,
-        nic,
-        phone,
-        email,
-        inq
+    const nic = req.body.nic;
+    
+    
+    inquiry.findOne({nic:nic}).then((post)=>{
+        
+       if (post == null){
+
+        res.json("Login Fail");
+
+       }else{
+        res.json("Login Success");
     }
-
-
-    const update = await Inquiry.findByIdAndUpdate(userId, updateInq)
-     .then(()=>{
-
-    res.status(200).send({status: "User Updated"})
 
     }).catch((err)=>{
         console.log(err);
-        res.status(500).send({status:"Error with updating data", error: err.message});
+        res.json("Validation Faild");
     })
-})
 
-    router.route("/delete/:id").delete(async(req,res)=> {
-        let userId = req.params.id;
-
-        await Inquiry.findByIdAndDelete(userId)
-        .then(()=>{
-            res.status(200).send({status:"User Deleted"});
-        }).catch((err)=> {
-            console.log(err.message);
-            res.status(500).send({status:"Error with delete user", error:err.message});
-        })
     
 })
 
-router.route("/get/:id").get(async(req,res)=>{
-    let userId = req.params.id;
-   const user = await Inquiry.findById(userId)
-    .then((inquiry)=>{
-        res.status(200).send({status: "user fetched", inquiry})
-    }).catch(()=>{
-        console.log(err.message);
-        res.status(500).send({status: "Error with user", error: err.message});
+router.route("/details").get((req,res)=>{
+
+    inquiry.find().then((allinq)=>{
+
+        res.json(allinq);
+
+    }).catch((err)=>{
+        res.json(err);
     })
+
 })
 
 module.exports = router;
