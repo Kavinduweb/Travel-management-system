@@ -14,7 +14,7 @@ const storage=multer.diskStorage({
 const upload=multer({storage:storage});
 
 
-router.post('/admin/add', upload.single("image") ,(req,res)=>{
+router.post('/add', upload.single("image") ,(req,res)=>{
     const newEquipment = new Equipment({
         name:req.body.name,
         description:req.body.description,
