@@ -7,7 +7,7 @@ const activityuserSchema = new mongoose.Schema ({
     },
 
     aprice:{
-        type:String,
+        type:Number,
         required:true
     },
     

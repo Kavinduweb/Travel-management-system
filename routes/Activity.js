@@ -26,6 +26,7 @@ router.post('/add', upload.single("activityImage"), (req, res) => {
     const newActivity = new Activities({
         aname: req.body.aname,
         category: req.body.category,
+        mindescription: req.body.mindescription,
         description: req.body.description,
         price: req.body.price,
         activityImage: req.file.originalname,
@@ -51,6 +52,7 @@ router.put('/update/:id',  upload.single("activityImage"), (req, res) => {
     .then(activity => {
         activity.aname = req.body.aname;
         activity.category = req.body.category;
+        activity.mindescription = req.body.mindescription;
         activity.description = req.body.description;
         activity.price = req.body.price;
         activity.activityImage = req.file.originalname
