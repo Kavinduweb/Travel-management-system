@@ -10,7 +10,12 @@ const guiderequestSchema = new mongoose.Schema ({
         type:String,
         required:true
     },
-    
+
+    guideusername:{
+        type:String,
+        required:true
+    },
+
     uname:{
         type:String,
         required:true

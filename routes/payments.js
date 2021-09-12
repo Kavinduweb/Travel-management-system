@@ -105,7 +105,7 @@ router.route("/payment/view/:no").get((req,res)=>{
 
     }).catch((err)=>{
        
-        res.json("You Havent Created an inquiry");
+        res.json("You Havent made any payment");
     })
 })
 
