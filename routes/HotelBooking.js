@@ -90,7 +90,38 @@ router.delete('/delete/:id',(req,res)=>{
             message:"Delete succesful"
         });
     });
-});
+})
+
+router.route("/view/:email").get((req,res)=>{
+
+    const email = req.params.email;
+    
+
+    HotelBooking.findOne({email:email}).then((HotelBooking)=>{
+        
+       if (HotelBooking == null){
+
+        success:false;
+
+       }else{
+           success:true;
+          
+          res.json({
+            id:HotelBooking._id,
+            roomType:HotelBooking.roomType,
+            capacity:HotelBooking.capacity,
+            name:HotelBooking.name,
+            email:HotelBooking.email,
+            arrivalDate:HotelBooking.arrivalDate,
+            departureDate:HotelBooking.departureDate,   
+        });
+        } 
+
+    }).catch((err)=>{
+       
+        res.json("You Havent made any Booking");
+    })
+})
 
 
 module.exports=router;
