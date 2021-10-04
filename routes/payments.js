@@ -75,12 +75,12 @@ router.delete('/payment/delete/:id',(req,res)=>{
 });
  
 
-router.route("/payment/view/:no").get((req,res)=>{
+router.route("/payment/view/:card").get((req,res)=>{
 
-    const no = req.params.no;
+    const card = req.params.card;
     
 
-    Payment.findOne({no:no}).then((payment)=>{
+    Payment.findOne({card:card}).then((payment)=>{
         
        if (payment == null){
 
