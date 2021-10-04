@@ -1,5 +1,6 @@
 const express = require('express');
 const TravelPackage = require('../models/travelpackages');
+const ReviewData = require('../models/TravelPackageRating')
 const multer = require("multer")
 const router =express.Router();
 
@@ -34,19 +35,48 @@ router.post('/admin/add', upload.single("packageImage") ,(req,res)=>{
 });
 
 
-router.get('/',(req,res)=>{
-    TravelPackage.find().exec((err,posts)=>{
-        if (err){
-            return res.status(400).json({
-                error:err
-            });
+router.get('/',async(req,res)=>{
+    try{
+    const data = await TravelPackage.find()
+    const dataMapping = await data?.map(async da=>{
+
+    const reviews = await ReviewData.find({packageId: da._id})
+   
+        return {
+            "packageName":da.packageName,
+            "id":da._id,
+            "destination":da.destination,
+            "discription":da.discription,
+            "date":da.date,
+            "noofdays":da.noofdays,
+            "noofnights":da.noofnights,
+            "vehical":da.vehical,
+            "perperson":da.perperson,
+            "packageImage":da.packageImage,
+            reviewsAvg:reviews.length === 0 ? 0 : reviews.map(re => re.rating).reduce((a,b)=>(a+ b))/reviews.length
         }
-        return res.status(200).json({
+
+    })
+
+    const promiseMappedData = await Promise.all(dataMapping)
+        return res.json({
             success:true,
-            existingPackage:posts
+            existingPackage:promiseMappedData,
+        })
+
+    }catch (err){
+        
+        return res.status(400).json({
+            error:err
         });
-    });
-})
+    }
+   
+});
+
+
+
+
+
 
 router.get('/admin/:id',(req,res)=>{
     let packageId=req.params.id;

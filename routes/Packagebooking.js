@@ -32,6 +32,5 @@ router.get('/allbookings/',(req,res)=>{
 })
 
 
-
 module.exports=router;
 

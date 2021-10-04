@@ -78,7 +78,8 @@ app.use("/contactus",contactUsRouter);
 const guideRequestRouter = require("./routes/GuideRequest");
 app.use("/guiderequest",guideRequestRouter);
 
-
+const TravlPackagereviewRoutes = require('./routes/TravelPackageRating');
+app.use('/travelpackage/review', TravlPackagereviewRoutes);
 
 
 app.listen(PORT, () =>{
